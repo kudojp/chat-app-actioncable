@@ -1,4 +1,10 @@
+// 高さ
+var messageHeight = messageContainer.scrollHeight
+// topにメッセージを追加
 messageContainer.insertAdjacentHTML('afterbegin', "<%= j(render @messages)%>")
+var newMessageHeight = messageContainer.scrollHeight
+// したにおろす
+window.scrollBy(0, newMessageHeight - messageHeight)
 <% if @messages.present? %>
   showAdditionally = true
 <% end %>

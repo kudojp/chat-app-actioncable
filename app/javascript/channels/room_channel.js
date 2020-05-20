@@ -22,7 +22,7 @@ document.addEventListener('turbolinks:load', () => {
     }
   })
 
-  const documentElement = document.documentElement
+  window.documentElement = document.documentElement
   // サーバーからのレスポンスのjs内でも使用できるように変数を決定
   window.messageContent = document.getElementById('message_content')
 
