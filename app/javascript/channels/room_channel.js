@@ -44,9 +44,30 @@ document.addEventListener('turbolinks:load', () => {
   // フォームに入力した際の動作
   messageContent.addEventListener('input', () => {
     button_activation()
+    changeLineCheck()
   })
   // 送信ボタンが押された後にボタンを無効化
   messageButton.addEventListener('click', () => {
     messageButton.classList.add('disabled')
+    changeLineCount(1)
   })
+
+  // 以下テキスト入力フォームの縦幅をflexibleに調整されるための変数と関数
+  const maxLineCount = 10
+  const getLineCount = () => {
+    return (messageContent.value + '\n').match(/\r?\n/g).length;
+  }
+  let lineCount = getLineCount()
+  let newLineCount
+  // 行数を変更
+  const changeLineCheck = () => {
+    newLineCount = Math.min(getLineCount(), maxLineCount)
+    if (lineCount !== newLineCount) {
+      changeLineCount(newLineCount)
+    }
+  }
+  const changeLineCount = (newLineCount) => {
+    // formの行数を変更
+    messageContent.rows = lineCount = newLineCount
+  }
 })
