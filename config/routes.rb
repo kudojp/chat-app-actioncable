@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root 'rooms#show'
 
   resource :messages, only: :create
+  get '/additional_messages', to: 'messages#additional_index'
 end

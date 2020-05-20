@@ -8,6 +8,13 @@ class MessagesController < ApplicationController
     ActionCable.server.broadcast 'room_channel', message: @message.template
   end
 
+  def additional_index
+    last_id = params[:oldest_message_id].to_i - 1
+    puts last_id
+    @messages = Message.includes(:user).order(:id).where(id: 1..last_id).last(50)
+    @messages.tap { |m| puts m.map(&:id) }
+  end
+
   private
 
   def message_params

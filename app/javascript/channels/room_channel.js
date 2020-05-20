@@ -92,4 +92,27 @@ document.addEventListener('turbolinks:load', () => {
     }
     footerHeight = newFooterHeight
   }
+
+  // ページの一番上までスクロールしたらさらに100件のメッセージを取得する
+  let oldestMessageId
+  window.showAdditionally = true
+
+  window.addEventListener('scroll', () => {
+    if (documentElement.scrollTop === 0 && showAdditionally) {
+      showAdditionally = false
+      oldestMessageId = document.getElementsByClassName('message')[0].id.replace(/[^0-9]/g, '')
+      // console.log('request from now')
+      $.ajax({
+        type: 'GET',
+        url: '/additional_messages',
+        cache: false,
+        data: {
+          oldest_message_id: oldestMessageId,
+          remote: true
+        }
+      }, {
+        passive: true
+      })
+    }
+  })
 })
