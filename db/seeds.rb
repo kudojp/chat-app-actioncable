@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user_count = 3
-message_count = 3
+message_count = 1000
 
 ApplicationRecord.transaction do
   # TestUserがなければ作成
