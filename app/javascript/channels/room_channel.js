@@ -21,4 +21,13 @@ document.addEventListener('turbolinks:load', () => {
       messageContainer.insertAdjacentHTML('beforeend', data['message'])
     }
   })
+
+  const documentElement = document.documentElement
+  // サーバーからのレスポンスのjs内でも使用できるように変数を決定
+  window.messageContent = document.getElementById('message_content')
+  // ページの一番下までスクロールする関数。サーバーからのレスポンスのjs内でも使用できるように変数を決定
+  window.scrollToBottom = () => {
+    window.scroll(0, documentElement.scrollHeight)
+  }
+  scrollToBottom()
 })
