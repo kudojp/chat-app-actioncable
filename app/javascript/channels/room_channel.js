@@ -66,8 +66,30 @@ document.addEventListener('turbolinks:load', () => {
       changeLineCount(newLineCount)
     }
   }
+
+  ////// 行数が増えた時に最新のコメントの上に重なってコメントが見えなくなることを防ぐために使う
+  ////// (送信ボタンはfooterです)
+  const footer = document.getElementById('footer')
+  let footerHeight = footer.scrollHeight
+  let newFooterHeight, footerHeightDiff
+
   const changeLineCount = (newLineCount) => {
     // formの行数を変更
     messageContent.rows = lineCount = newLineCount
+
+    ////// 行数が増えた時に最新のコメントの上に重なってコメントが見えなくなることを防ぐ
+    // 新しいフッターの高さを取得し、違いを計算
+    newFooterHeight = footer.scrollHeight
+    // どれだけ上にスクロールさせるか
+    footerHeightDiff = newFooterHeight - footerHeight
+    // 新しいグッターの高さをチャットランのpadding-bottomに反映し、スクロールさせる
+    if (footerHeightDiff > 0) {
+      messageContainer.style.paddingBottom = newFooterHeight + 'px'
+      window.scrollBy(0, footerHeightDiff)
+    } else {
+      window.scrollBy(0, footerHeightDiff)
+      messageContainer.style.paddingBottom = newFooterHeight + 'px'
+    }
+    footerHeight = newFooterHeight
   }
 })
